@@ -9,7 +9,7 @@ const queryAPI = () => {
     })
     .then((response) => {
         data = JSON.parse(response.contents);
-        afficheShows(data);
+        afficheData(data[0]['id']);
     })
 };
 
