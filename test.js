@@ -1,29 +1,19 @@
 let query = "dynasty"
 let data;
 
-fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/apisearch/?name=dynasty')}`)
-.then(response => {
-	if (response.ok) return response.json()
-	throw new Error('Network response was not ok.')
-})
-.then(data => console.log(data.contents));
-.then((response) => {
-    data = JSON.parse(response.contents);
-   
-    afficheData(data[0]['id']);
-});
 
-function afficheShows() {
-	
-	var resultat = document.createElement("div");
-	var name = document.createElement("p");
-	name.value = 
-
-
-
-	var resultats = document.getElementById("bloc-resultats");
-	document.resultats.insertBefore(resultat, null);
-}
+const queryAPI = () => {
+    const queryName = $("#champRecherche").val(); 
+    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + queryName)}`)
+    .then(response => {
+        if (response.ok) return response.json()
+        throw new Error('Network response was not ok.')
+    })
+    .then((response) => {
+        data = JSON.parse(response.contents);
+        afficheData(data[0]['id']);
+    })
+};
 
 const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api'+ id)}`)
 .then(response => {
@@ -33,4 +23,4 @@ const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeUR
 .then ( (response) => {
     show = JSON.parse(response.contents)
     console.log(show);
-})
+});
