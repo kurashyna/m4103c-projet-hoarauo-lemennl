@@ -1,16 +1,17 @@
-let query = "dynasty"
 let data;
 
-fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/apisearch/?name=dynasty')}`)
-.then(response => {
-	if (response.ok) return response.json()
-	throw new Error('Network response was not ok.')
-})
-.then((response) => {
-    data = JSON.parse(response.contents);
-   
-    afficheShows(data);
-});
+const queryAPI = () => {
+    const queryName = $("#champRecherche").val(); 
+    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + queryName)}`)
+    .then(response => {
+        if (response.ok) return response.json()
+        throw new Error('Network response was not ok.')
+    })
+    .then((response) => {
+        data = JSON.parse(response.contents);
+        afficheShows(data);
+    })
+};
 
 function afficheShows(data) {
 
@@ -51,4 +52,4 @@ const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeUR
 .then ( (response) => {
     show = JSON.parse(response.contents)
     console.log(show);
-})
+});
