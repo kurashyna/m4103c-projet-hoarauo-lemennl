@@ -16,30 +16,31 @@ const queryAPI = () => {
 function afficheShows(data) {
 
 	var resultats = document.getElementById("bloc-resultats");
+	$(resultats).empty();
 
-	for ( var i = 0; i < data.length; i++ ){ //On crée une div pr chaque show et on crée les balises qui correspondent avec les données
+	for ( var i = 0; i < data.length; i++ ){ //On crée une div pr chaque show et on crée les balises qui correspondent aux données
 		var resultat = document.createElement("div");
 
 		var name = document.createElement("p");
-		name.value = data[i]("name");
+		name.textContent = data[i]["name"];
 
 		var description = document.createElement("p");
-		description.value = data[i]("description");
+		description.textContent = data[i]["description"];
 
-		var image = document.createElement("a");
-		image.value = data[i]("imageUrl");
+		var image = document.createElement("img");
+		image.src = "https:" + data[i]["imageUrl"];
 
 		var rating = document.createElement("p");
-		rating.value = data[i]("rating");
+		rating.textContent = data[i]["rating"] + "/5";
 
 		// On ajoute les éléments dans la div
-		resultat.insertBefore(name, null);
-		resultat.insertBefore(description, null);
-		resultat.insertBefore(image, null);
-		resultat.insertBefore(rating, null);
+		resultat.appendChild(name);
+		resultat.appendChild(description);
+		resultat.appendChild(image);
+		resultat.appendChild(rating);
 
 		// On ajoute la div dans le bloc résultat
-		resultats.insertBefore(resultat, null);
+		resultats.appendChild(resultat);
 	}
 		
 }
