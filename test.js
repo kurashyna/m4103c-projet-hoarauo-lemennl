@@ -6,23 +6,41 @@ fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchthe
 	if (response.ok) return response.json()
 	throw new Error('Network response was not ok.')
 })
-.then(data => console.log(data.contents));
 .then((response) => {
     data = JSON.parse(response.contents);
    
-    afficheData(data[0]['id']);
+    afficheShows(data);
 });
 
-function afficheShows() {
-	
-	var resultat = document.createElement("div");
-	var name = document.createElement("p");
-	name.value = 
-
-
+function afficheShows(data) {
 
 	var resultats = document.getElementById("bloc-resultats");
-	document.resultats.insertBefore(resultat, null);
+
+	for ( var i = 0; i < data.length; i++ ){ //On crée une div pr chaque show et on crée les balises qui correspondent avec les données
+		var resultat = document.createElement("div");
+
+		var name = document.createElement("p");
+		name.value = data[i]("name");
+
+		var description = document.createElement("p");
+		description.value = data[i]("description");
+
+		var image = document.createElement("a");
+		image.value = data[i]("imageUrl");
+
+		var rating = document.createElement("p");
+		rating.value = data[i]("rating");
+
+		// On ajoute les éléments dans la div
+		resultat.insertBefore(name, null);
+		resultat.insertBefore(description, null);
+		resultat.insertBefore(image, null);
+		resultat.insertBefore(rating, null);
+
+		// On ajoute la div dans le bloc résultat
+		resultats.insertBefore(resultat, null);
+	}
+		
 }
 
 const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api'+ id)}`)
