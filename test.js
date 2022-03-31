@@ -73,7 +73,7 @@ function showResults(val) {
         $('#prediction').text(" ");
     }
     else if (val.length < 3) {
-        $('#prediction').text(" ").append($('<p>Entrer au moins 3 lettres</p>'));
+        $('#prediction').text(" ").append($('<p> &empty; Entrer au moins 3 lettres</p>'));
     } else {
         fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + val)}`)
             .then(response => {
@@ -90,10 +90,8 @@ function showResults(val) {
                     }
                     $('#prediction').text(" ").append(listePrediction);
                 } else {
-                    $('#prediction').text(" ").append('<p> Pas de résultats </p>');
+                    $('#prediction').text(" ").append('<p> &empty; Pas de résultats </p>');
                 }
-
-
             });
     }
 
