@@ -22,7 +22,7 @@
 			<section id="section-recherche">
 				<div id="bloc-recherche">
 					<!-- Champ de recherche -->
-					<input id="champRecherche" type="text" placeholder="Que cherchez-vous ?" />
+						<input id="champRecherche" name="champRecherche" type="text" placeholder="Que cherchez-vous ?" onkeyup="showResults(this.value)"/>
 
 					<!-- Boutons -->
 					<button id="btn-lancer-recherche" type="button"
@@ -42,7 +42,7 @@
 						<!-- (Icones provenant de flaticon.com) -->
 					</button>
 				</div>
-
+				<div id="prediction"></div>
 				<!-- Résultats de recherche -->
 				<div id="bloc-gif-attente">
 					<img src='images/attente-ajax.gif' alt="GIF Attente de résultats" width=50 />

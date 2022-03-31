@@ -2,47 +2,55 @@ let data;
 
 const queryAPI = () => {
     const queryName = $("#champRecherche").val(); 
-    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + queryName)}`)
-    .then(response => {
-        if (response.ok) return response.json()
-        throw new Error('Network response was not ok.')
-    })
-    .then((response) => {
-        data = JSON.parse(response.contents);
-        afficheData(data[0]['id']);
-    })
+    if (queryName != null) {
+        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + queryName)}`)
+        .then(response => {
+            if (response.ok) return response.json()
+            throw new Error('Network response was not ok.')
+        })
+        .then((response) => {
+            data = JSON.parse(response.contents);
+            afficheShows(data);
+        })
+    } else {
+        afficheShows(null);
+    }
+    
 };
 
 function afficheShows(data) {
 
-	var resultats = document.getElementById("bloc-resultats");
-	$(resultats).empty();
-
-	for ( var i = 0; i < data.length; i++ ){ //On crée une div pr chaque show et on crée les balises qui correspondent aux données
-		var resultat = document.createElement("div");
-
-		var name = document.createElement("p");
-		name.textContent = data[i]["name"];
-
-		var description = document.createElement("p");
-		description.textContent = data[i]["description"];
-
-		var image = document.createElement("img");
-		image.src = "https:" + data[i]["imageUrl"];
-
-		var rating = document.createElement("p");
-		rating.textContent = data[i]["rating"] + "/5";
-
-		// On ajoute les éléments dans la div
-		resultat.appendChild(name);
-		resultat.appendChild(description);
-		resultat.appendChild(image);
-		resultat.appendChild(rating);
-
-		// On ajoute la div dans le bloc résultat
-		resultats.appendChild(resultat);
-	}
-		
+    if (data == null) {
+        var resultats = document.getElementById("bloc-resultats");
+        $(resultats).empty();
+    
+        for ( var i = 0; i < data.length; i++ ){ //On crée une div pr chaque show et on crée les balises qui correspondent aux données
+            var resultat = document.createElement("div");
+    
+            var name = document.createElement("p");
+            name.textContent = data[i]["name"];
+    
+            var description = document.createElement("p");
+            description.textContent = data[i]["description"];
+    
+            var image = document.createElement("img");
+            image.src = "https:" + data[i]["imageUrl"];
+    
+            var rating = document.createElement("p");
+            rating.textContent = data[i]["rating"] + "/5";
+    
+            // On ajoute les éléments dans la div
+            resultat.appendChild(name);
+            resultat.appendChild(description);
+            resultat.appendChild(image);
+            resultat.appendChild(rating);
+    
+            // On ajoute la div dans le bloc résultat
+            resultats.appendChild(resultat);
+        }
+    } else {
+        //TODO : Gérer quand data vide
+    }	
 }
 
 const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api'+ id)}`)
@@ -54,3 +62,29 @@ const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeUR
     show = JSON.parse(response.contents)
     console.log(show);
 });
+
+const afficheDataPrediction = (elem) => fetch('https://api.allorigins.win/get?url=${encodeURIComponent(\'https://catchtheshow.herokuapp.com/api' + $(elem).attr('id'))
+
+//TODO : Afficher les shows 
+
+// Prédiction de recherche
+function showResults(val) {
+
+    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + val)}`)
+        .then(response => {
+            if (response.ok) return response.json()
+            throw new Error('Network response was not ok.')
+        })
+        .then( (response) => {
+            data = JSON.parse(response.contents);
+            res = document.getElementById("prediction");
+            res.innerHTML = '';
+            let list = '';
+            var listePrediction = $('<ul></ul>');
+            for (let i=0; i < data.length; i++ ){
+                // TODO : Finir cette ligne
+                listePrediction.append($('<li></li>').text(data[i]['name']).attr('id', data[i]['id']).click('afficheDataPrediction(this)'));
+            }
+            $('#prediction').append(listePrediction);
+        });
+}
