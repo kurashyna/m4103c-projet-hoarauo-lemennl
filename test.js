@@ -69,22 +69,32 @@ const afficheDataPrediction = (elem) => fetch('https://api.allorigins.win/get?ur
 
 // Prédiction de recherche
 function showResults(val) {
+    if (val.length == 0){
+        $('#prediction').text(" ");
+    }
+    else if (val.length < 3) {
+        $('#prediction').text(" ").append($('<p>Entrer au moins 3 lettres</p>'));
+    } else {
+        fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + val)}`)
+            .then(response => {
+                if (response.ok) return response.json()
+                throw new Error('Network response was not ok.')
+            })
+            .then( (response) => {
+                data = JSON.parse(response.contents);
+                if (data.length != 0) {
+                    var listePrediction = $('<ul></ul>');
+                    for (let i=0; i < data.length; i++ ){
+                        // TODO : Finir cette ligne
+                        listePrediction.append($('<li></li>').text(data[i]['name']).attr('id', data[i]['id']));
+                    }
+                    $('#prediction').text(" ").append(listePrediction);
+                } else {
+                    $('#prediction').text(" ").append('<p> Pas de résultats </p>');
+                }
 
-    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + val)}`)
-        .then(response => {
-            if (response.ok) return response.json()
-            throw new Error('Network response was not ok.')
-        })
-        .then( (response) => {
-            data = JSON.parse(response.contents);
-            res = document.getElementById("prediction");
-            res.innerHTML = '';
-            let list = '';
-            var listePrediction = $('<ul></ul>');
-            for (let i=0; i < data.length; i++ ){
-                // TODO : Finir cette ligne
-                listePrediction.append($('<li></li>').text(data[i]['name']).attr('id', data[i]['id']).click('afficheDataPrediction(this)'));
-            }
-            $('#prediction').append(listePrediction);
-        });
+
+            });
+    }
+
 }
