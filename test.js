@@ -92,22 +92,22 @@ function afficherInfos(id){
 		var infosGnrl = document.createElement("div");
 
 		var creators = document.createElement("p");
-        creators.textContent = "Créateurs : " + data[i]["creators"];
+        creators.textContent = "Créateurs : " + data["creators"];
     
         var name = document.createElement("p");
-        name.textContent = "Titre : " + data[i]["name"];
+        name.textContent = "Titre : " + data["name"];
     
         var description = document.createElement("p");
-        description.textContent = "Description : " + data[i]["description"];
+        description.textContent = "Description : " + data["description"];
     
         var image = document.createElement("img");
-        image.src = "https:" + data[i]["imageUrl"];
+        image.src = "https:" + data["imageUrl"];
 		
 		var status = document.createElement("p");
-		status.textContent = "Statut : " + data[i]["status"];
+		status.textContent = "Statut : " + data["status"];
 
         var rating = document.createElement("p");
-        rating.innerHTML = "Rating : " + data[i]["rating"] + "/5 " + '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">' +
+        rating.innerHTML = "Rating : " + data["rating"] + "/5 " + '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">' +
 		'<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>' +
 		'</svg>';
 		
@@ -119,13 +119,13 @@ function afficherInfos(id){
 		intitule.textContent = "Prochain épisode :";
 
 		var nameEp = document.createElement("p");
-		nameEp.textContent = "Titre : " + data[i]["nextEpisode"]["name"];
+		nameEp.textContent = "Titre : " + data["nextEpisode"]["name"];
 
 		var dateEp = document.createElement("p");
-		dateEp.textContent = "Date : " + data[i]["nextEpisode"]["day"] + "/" + data[i]["nextEpisode"]["month"] + "/" + data[i]["nextEpisode"]["year"];
+		dateEp.textContent = "Date : " + data["nextEpisode"]["day"] + "/" + data["nextEpisode"]["month"] + "/" + data["nextEpisode"]["year"];
 
 		var seasonEp = document.createElement("p");
-		seasonEp.textContent = "Saison : " + data[i]["nextEpisode"]["season"] + " numéro d'épisode : " + data[i]["nextEpisode"]["episode"];
+		seasonEp.textContent = "Saison : " + data["nextEpisode"]["season"] + " numéro d'épisode : " + data["nextEpisode"]["episode"];
 
 		
         // On ajoute les infos principales dans la div attitrée
