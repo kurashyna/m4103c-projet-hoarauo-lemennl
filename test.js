@@ -1,7 +1,9 @@
 let data;
 
-const queryAPI = () => {
-    const queryName = $("#champRecherche").val(); 
+const queryAPI = (searchValue = null) => {
+    $('#prediction').text(" ");
+    const queryName = searchValue ?? $("#champRecherche").val(); 
+    console.log(queryName);
     if (queryName != null) {
         fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + queryName)}`)
         .then(response => {
@@ -18,9 +20,9 @@ const queryAPI = () => {
     
 };
 
-function afficheShows(data) {
+function afficheShows(data){
 
-    if (data == null) {
+    if (data != null) {
         var resultats = document.getElementById("bloc-resultats");
         $(resultats).empty();
     
@@ -94,5 +96,80 @@ function showResults(val) {
                 }
             });
     }
-
 }
+
+const addFavori = () => {
+    let favoris = [];
+    if (localStorage.getItem("favoris") != ''){
+        favoris.push(localStorage.getItem("favoris"));
+    }
+    favoris.push($("#champRecherche").val());
+    localStorage.setItem("favoris", favoris);
+    getFavoris();
+}
+
+const getFavoris = () => {
+    if (localStorage.getItem("favoris") == '') {
+        const divFavoris = $('#liste-favoris').html("").html(' &empty; Aucune recherche enregistrée');
+    } else {
+        const favorisList = localStorage.getItem("favoris").split(',');
+        console.log(favorisList);
+        const divFavoris = $('#liste-favoris');
+        divFavoris.html(" ");
+        for (favori of favorisList) {
+            const itemFavori = $('<li></li>').attr('id', favori);
+            const spanFavori = $('<span></span>').text(favori).attr('onclick', 'queryAPI('+ "\'"+ favori + "\'" +  ')');
+            const delFavori = $('<img></img>').attr('src', 'images/croix.svg').attr('onclick', 'delFavori(' + favori + ')').attr('width', '15px');
+            itemFavori.append(spanFavori);
+            itemFavori.append(delFavori);
+            divFavoris.append(itemFavori);
+        }
+    }   
+}
+
+const delFavori = (elem) => {
+    let favoris = localStorage.getItem("favoris").split(',');
+    const index = favoris.indexOf($(elem).attr('id'));
+    console.log(index);
+    favoris.splice(index, 1);
+    localStorage.setItem("favoris", favoris);
+    getFavoris();
+}
+const addSerieFav = () => {
+    let series = [];
+    if (localStorage.getItem("series") != ''){
+        series.push(localStorage.getItem("series"));
+    }
+    series.push($("#champRecherche").val());
+    localStorage.setItem("series", series);
+    getFavoris();
+}
+
+const getSeriesFav = () => {
+    if (localStorage.getItem("series") == '') {
+        const divSeriesFav = $('#liste-series-favorites').html("").html(' &empty; Aucune recherche enregistrée');
+    } else {
+        const seriesList = localStorage.getItem("series").split(',');
+        const divSeriesFav = $('#liste-series-favorites');
+        divSeriesFav.html(" ");
+        for (serie of seriesList) {
+            const itemSerie = $('<li></li>').attr('id', serie);
+            const spanSerie = $('<span></span>').text(serie).attr('onclick', 'afficheData('+ "\'/"+ serie + "\'" +  ')');
+            const delSerie = $('<img></img>').attr('src', 'images/croix.svg').attr('onclick', 'delSerie(' + serie + ')').attr('width', '15px');
+            itemSerie.append(spanSerie);
+            itemSerie.append(delSerie);
+            divSeriesFav.append(itemSerie);
+        }
+    }   
+}
+
+// TODO : Finir de remplacer
+const delSerieFav = (elem) => {
+    let series = localStorage.getItem("favoris").split(',');
+    const index = series.indexOf($(elem).attr('id'));
+    series.splice(index, 1);
+    localStorage.setItem("series", series);
+    getSeriesFav();
+}
+getSeriesFav();
+getFavoris();
