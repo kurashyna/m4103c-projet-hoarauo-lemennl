@@ -100,9 +100,11 @@ function showResults(val) {
                     var listePrediction = $('<ul></ul>');
                     for (let i=0; i < data.length; i++ ){
                         // TODO : Finir cette ligne
-                        listePrediction.append($('<li></li>').text(data[i]['name']).attr('id', data[i]['id']));
+                        listePrediction.append($('<li></li>').text(data[i]['name']).attr('id', data[i]['id']).attr('onclick', 'afficheData(\'' +  data[i]['id'] + '\')').css("cursor", "pointer"));
+    
                     }
                     $('#prediction').text(" ").append(listePrediction);
+                    $('#prediction').append($('<hr/>'));
                 } else {
                     $('#prediction').text(" ").append('<p> &empty; Pas de résultats </p>');
                 }
@@ -125,7 +127,6 @@ const getFavoris = () => {
         const divFavoris = $('#liste-favoris').html("").html(' &empty; Aucune recherche enregistrée');
     } else {
         const favorisList = localStorage.getItem("favoris").split(',');
-        console.log(favorisList);
         const divFavoris = $('#liste-favoris');
         divFavoris.html(" ");
         for (favori of favorisList) {
@@ -152,13 +153,15 @@ const addSerieFav = () => {
     if (localStorage.getItem("series") != ''){
         series.push(localStorage.getItem("series"));
     }
-    series.push($("#champRecherche").val());
+    if ($("#champRecherche").val() != " "){
+        series.push($("#champRecherche").val());
+    }
     localStorage.setItem("series", series);
     getFavoris();
 }
 
 const getSeriesFav = () => {
-    if (localStorage.getItem("series") == '') {
+    if (localStorage.getItem("series") == '' || localStorage.getItem("series") == null) {
         const divSeriesFav = $('#liste-series-favorites').html("").html(' &empty; Aucune recherche enregistrée');
     } else {
         const seriesList = localStorage.getItem("series").split(',');
@@ -175,7 +178,6 @@ const getSeriesFav = () => {
     }   
 }
 
-// TODO : Finir de remplacer
 const delSerieFav = (elem) => {
     let series = localStorage.getItem("favoris").split(',');
     const index = series.indexOf($(elem).attr('id'));
