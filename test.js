@@ -1,10 +1,9 @@
 let data;
 
 const queryAPI = (searchValue = null) => {
-    $('#bloc-gif-attente').css("display", "block")
+    $('#prediction').text(" ");
     const queryName = searchValue ?? $("#champRecherche").val(); 
-    $("#champRecherche").val("")
-    $("#prediction").text("");
+    console.log(queryName);
     if (queryName != null) {
         fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + queryName)}`)
         .then(response => {
@@ -17,13 +16,17 @@ const queryAPI = (searchValue = null) => {
         })
     } else {
         afficheShows(null);
-    }  
+    }
+    
 };
 
 function afficheShows(data){
+
 	var resultats = document.getElementById("bloc-resultats");
         $(resultats).empty();
+
     if (data != null) {
+    
         for ( var i = 0; i < data.length; i++ ){ //On crée une div pr chaque show et on crée les balises qui correspondent aux données
             var resultat = document.createElement("div");
     
@@ -59,13 +62,12 @@ function afficheShows(data){
         }
     } else {
         var resultat = document.createElement("div");
-        
+    
         var vide = document.createElement("p");
         vide.textContent = "Il n'y a pas de résultats.";
 		resultat.appendChild(vide);
 		resultats.appendChild(resultat);
-    }
-    $('#bloc-gif-attente').css("display", "none")
+    }	
 }
 
 const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api'+ id)}`)
@@ -158,8 +160,6 @@ function afficherInfos(id){
 
 // Prédiction de recherche
 function showResults(val) {
-    $('#bloc-gif-attente-prediction').css("display", "block")
-    $('#bloc-gif-attente-prediction').append($("<p></p>").text("Affichage des résultats"));
     if (val.length == 0){
         $('#prediction').text(" ");
     }
@@ -173,7 +173,6 @@ function showResults(val) {
             })
             .then( (response) => {
                 data = JSON.parse(response.contents);
-                $('#bloc-gif-attente-prediction').css("display", "none")
                 if (data.length != 0) {
                     var listePrediction = $('<ul></ul>');
                     for (let i=0; i < data.length; i++ ){
