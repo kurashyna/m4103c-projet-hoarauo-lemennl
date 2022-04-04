@@ -74,13 +74,15 @@ const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeUR
 })
 .then ( (response) => {
     show = JSON.parse(response.contents)
-    console.log(show);
+    return show;
 });
 
 const afficheDataPrediction = (elem) => fetch('https://api.allorigins.win/get?url=${encodeURIComponent(\'https://catchtheshow.herokuapp.com/api' + $(elem).attr('id'))
 
 //TODO : Afficher les shows 
 function afficherInfos(id){
+
+    let data = afficheData(id);
 	var resultats = document.getElementById("bloc-resultats");
         $(resultats).empty();
 
