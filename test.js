@@ -122,6 +122,9 @@ const addFavori = () => {
     if (localStorage.getItem("favoris") != null){
         favorisJSON = JSON.parse(localStorage.getItem("favoris"));
 
+        if ( Array.isArray(favorisJSON['series']) && favorisJSON['series'].length){
+            Favoris['series'] = favorisJSON['series'];
+        }
         if ( Array.isArray(favorisJSON['recherches']) && favorisJSON['recherches'].length){
             Favoris['recherches'] = favorisJSON['recherches'];
         }
@@ -142,7 +145,6 @@ const addFavori = () => {
 
 //Affiche les favoris de recherche
 const getFavoris = () => {
-    console.log(localStorage.getItem("favoris"));
     var Favoris = {"recherches": [], "series": []};
     if (localStorage.getItem("favoris") == null){
         localStorage.setItem("favoris", JSON.stringify(Favoris));
@@ -167,12 +169,9 @@ const getFavoris = () => {
 
 //Supprime le favori de recherche sélectionné
 const delFavori = (elem) => {
-    console.log(elem.id);
     favoris = JSON.parse(localStorage.getItem("favoris"));
     recherches = favoris['recherches'];
-    console.log(recherches);
     const index = recherches.indexOf(elem.id);
-    console.log(index);
     recherches.splice(index, 1);
     favoriStorage = JSON.stringify(favoris);
     localStorage.setItem("favoris", favoriStorage);
@@ -181,66 +180,65 @@ const delFavori = (elem) => {
 
 //Ajout aux favoris une série
 const addSerieFav = (id) => {
+    console.log(id);
     var Favoris = {"recherches": [], "series": []};
     if (localStorage.getItem("favoris") != null){
         favorisJSON = JSON.parse(localStorage.getItem("favoris"));
 
+        if ( Array.isArray(favorisJSON['series']) && favorisJSON['series'].length){
+            Favoris['series'] = favorisJSON['series'];
+        }
         if ( Array.isArray(favorisJSON['recherches']) && favorisJSON['recherches'].length){
             Favoris['recherches'] = favorisJSON['recherches'];
         }
     }
-    if( $("#champRecherche").val() != "" ){
-        if (!Favoris['recherches'].includes($("#champRecherche").val())) {
-            Favoris['recherches'].push($("#champRecherche").val());
+    if( id != null ){
+        if (!Favoris['series'].includes(id)) {
+            Favoris['series'].push(id);
         } else {
             alert("Valeur déjà présente.");
-        }
-        
+        } 
     }
-    
+
     favoriStorage = JSON.stringify(Favoris);
     localStorage.setItem("favoris", favoriStorage);
-    getFavoris();
-
-    let series = [];
-    if (localStorage.getItem("series") != ''){
-        series.push(localStorage.getItem("series"));
-    }
-    splitedSeries = series[0].split(',');
-    if (!splitedSeries.includes(id)){
-        series.push(id);
-        localStorage.setItem("series", series);
-        getSeriesFav();
-    } else {
-        alert("Série déja favorite");
-    }
+    getSeriesFav();
 }
 
 //Affiche les favoris de séries  
 const getSeriesFav = () => {
-    if (localStorage.getItem("series") == '' || localStorage.getItem("series") == null) {
-        const divSeriesFav = $('#liste-series-favorites').html("").html(' &empty; Aucune recherche enregistrée');
-    } else {
-        const seriesList = localStorage.getItem("series").split(',');
+
+
+    var Favoris = {"recherches": [], "series": []};
+    if (localStorage.getItem("favoris") == null){
+        localStorage.setItem("favoris", JSON.stringify(Favoris));
+    }
+    favoris = JSON.parse(localStorage.getItem("favoris"));
+    series = favoris['series'];
+    if (Array.isArray(series) && series.length) {
         const divSeriesFav = $('#liste-series-favorites');
-        divSeriesFav.html(" ");
-        for (serie of seriesList) {
-            const itemSerie = $('<li></li>').attr('id', serie);
-            const spanSerie = $('<span></span>').text(serie).attr('onclick', 'afficheData('+ "\'"+ serie + "\'" +  ')');
-            const delSerie = $('<img></img>').attr('src', 'images/croix.svg').attr('onclick', 'delSerieFav(' + "'" + serie + "'"+ ')').attr('width', '15px');
-            itemSerie.append(spanSerie);
-            itemSerie.append(delSerie);
-            divSeriesFav.append(itemSerie);
-        }
+            divSeriesFav.html(" ");
+            for (serie of series) {
+                const itemSerie = $('<li></li>').attr('id', serie);
+                const spanSerie = $('<span></span>').text(serie).attr('onclick', 'afficheData('+ "\'"+ serie + "\'" +  ')');
+                const delSerie = $('<img></img>').attr('src', 'images/croix.svg').attr('onclick', 'delSerieFav(' + "'" + serie + "'"+ ')').attr('width', '15px');
+                itemSerie.append(spanSerie);
+                itemSerie.append(delSerie);
+                divSeriesFav.append(itemSerie);
+            }
+    } else {
+        const divFavoris = $('#liste-favoris').html("").html(' &empty; Aucune recherche enregistrée');
     }   
 }
 
 //Supprime le favori de série sélectionné
 const delSerieFav = (elem) => {
-    let series = localStorage.getItem("series").split(',');
+    favoris = JSON.parse(localStorage.getItem("favoris"));
+    series = favoris['series'];
     const index = series.indexOf(elem);
     series.splice(index, 1);
-    localStorage.setItem("series", series);
+    favoriStorage = JSON.stringify(favoris);
+    localStorage.setItem("favoris", favoriStorage);
     getSeriesFav();
 }
 getSeriesFav();
