@@ -5,8 +5,8 @@
 :root {
 	--text-color : #dddbf1; /* Texte presque blanc */
 	--background: #383f51; /* Fond bleu foncé */
-	--main-green: #ab9f9d;
-	--active-green: #d1beb0;
+	--main-color: #ab9f9d;
+	--active-color: #d1beb0;
 }
 
 * {
@@ -33,7 +33,7 @@ h1 {
 	text-align: center;
 	font-variant: small-caps;
 	font-size: 2.5em;
-	color: var(--main-green);
+	color: var(--main-color);
 }
 
 p#explication {
@@ -70,13 +70,13 @@ p#explication {
 	color: #2d2d2d; /* Presque noir */
 	flex: 1;
 	padding: 0.7em;
-	border: 0.3em solid var(--main-green);
+	border: 0.3em solid var(--main-color);
 }
 
 #bloc-recherche>button {
 	padding: 0.8em 0.8em;
 	/* Bordure invisible pour que le hover ne bouge pas le bouton */
-	border: 1px solid var(--main-green);
+	border: 1px solid var(--main-color);
 
 	/* Par défaut, les boutons sont en gris
 	 (S'ils sont "clicables", ils passent en vert) */
@@ -85,7 +85,7 @@ p#explication {
 
 /* Apparences des boutons clicables */
 #bloc-recherche>button.btn_clicable {
-	background-color: var(--main-green);
+	background-color: var(--main-color);
 }
 
 #bloc-recherche>button:focus {
@@ -100,7 +100,7 @@ p#explication {
 }
 
 #bloc-recherche>button.btn_clicable:active {
-	background-color: var(--active-green);
+	background-color: var(--active-color);
 }
 
 /* GIF de chargement (caché par défaut) */
@@ -118,7 +118,7 @@ p#explication {
 
 /* Section de la barre de séparation */
 #section-separation {
-	border-left: 2px dashed var(--main-green);
+	border-left: 2px dashed var(--main-color);
 	margin: 0 20px;
 }
 
@@ -147,7 +147,7 @@ p#explication {
 }
 
 #liste-favoris li span:hover {
-	color: var(--main-green);
+	color: var(--main-color);
 }
 
 /* Media-query pour gérer l'affichage sur petit écran */
