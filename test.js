@@ -1,5 +1,6 @@
 let data;
 
+//Fetch les infos des différents shows
 const queryAPI = (searchValue = null) => {
     $('#prediction').text(" ");
     const queryName = searchValue ?? $("#champRecherche").val(); 
@@ -19,12 +20,12 @@ const queryAPI = (searchValue = null) => {
     
 };
 
+//Affiche les infos générales des shows aux noms semblables au champ
 function afficheShows(data){
-
     $("#bloc-resultats").empty();
     if (data != null) { //Si des shows existent avec ce nom, on affiche leurs infos générales
         for (show of data) {
-            const showDiv = $('<div></div').css("cursor", "pointer");
+            const showDiv = $('<div></div').css("cursor", "pointer"); //Clarté, pointeur en main pr clic
 
             showDiv.append($('<h2></h2>').text(show['name']));
             showDiv.append($('<img></img>').attr('src', "https:" + show['imageUrl']));
@@ -33,14 +34,15 @@ function afficheShows(data){
              		'<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>' +
              	  	'</svg>'));
 
-            $("#bloc-resultats").append(showDiv);
+            $("#bloc-resultats").append(showDiv); //On met toutes les infos correspondantes dans le bloc-resultats
             $("#bloc-resultats").append( $('<hr />') );
 
-            showDiv.attr('onclick', "afficheData(" + "'" + show["id"] + "'" +")");
+            showDiv.attr('onclick', "afficheData(" + "'" + show["id"] + "'" +")"); //On clique sur la div pour afficher ses infos détaillées
         }
     }
 }
 
+//Fetch les infos d'un show via son id
 const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api'+ id)}`)
 .then(response => {
 	if (response.ok) return response.json()
@@ -51,9 +53,10 @@ const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeUR
     afficherInfos(show, id);
 });
 
+//Fetch les possibles shows avec un nom semblable (prédiction)
 const afficheDataPrediction = (elem) => fetch('https://api.allorigins.win/get?url=${encodeURIComponent(\'https://catchtheshow.herokuapp.com/api' + $(elem).attr('id'))
 
-
+//Affiche les infos d'un show via son id
 function afficherInfos(show, id){
     $("#bloc-resultats").empty();
     console.log(show);
@@ -63,7 +66,7 @@ function afficherInfos(show, id){
         divInfos.append($('<p></p>').html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmarks-fill" viewBox="0 0 16 16">' +
         '<path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4z"/>' +
         '<path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1H4.268z"/>' +
-        '</svg>' + " Ajouter aux séries favorites").attr('onclick', 'addSerieFav(' + "'" + id + "'"+ ')').css("cursor", "pointer"));
+        '</svg>' + " Ajouter aux séries favorites").attr('onclick', 'addSerieFav(' + "'" + id + "'"+ ')').css("cursor", "pointer")); //Clarté, pointeur en main pr clic
 
         divInfos.append($('<p></p>').text("Statut : " + show['status']));
         divInfos.append($('<p></p>').html("<strong>Synopsis : </strong>" + show['description']));
@@ -80,16 +83,16 @@ function afficherInfos(show, id){
             divInfos.append($('<p></p>').text("Sort dans : " + countdown));
             divInfos.append($('<p></p>').text("Saison " + show['nextEpisode']['season'] + " - Episode " + show['nextEpisode']['episode']));
         }
-        $("#bloc-resultats").append(divInfos);
+        $("#bloc-resultats").append(divInfos); //On met toutes les infos correspondantes dans le bloc-resultats
     }
 }
 
-// Prédiction de recherche
+//Affiche la prédiction de recherche
 function showResults(val) {
-    if (val.length == 0){
+    if (val.length == 0){ //On affiche pas de prédictions si le champ est vide
         $('#prediction').text(" ");
     }
-    else if (val.length < 3) {
+    else if (val.length < 3) { //Nécessité d'au moins 3 lettres dans le champ pr afficher une prédiction
         $('#prediction').text(" ").append($('<p> &empty; Entrer au moins 3 lettres</p>'));
     } else {
         fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + val)}`)
@@ -113,6 +116,7 @@ function showResults(val) {
     }
 }
 
+//Ajout aux favoris une recherche
 const addFavori = () => {
     var Favoris = {"recherches": [], "series": []};
     if (localStorage.getItem("favoris") != null){
@@ -136,6 +140,7 @@ const addFavori = () => {
     getFavoris();
 }
 
+//Affiche les favoris de recherche
 const getFavoris = () => {
     console.log(localStorage.getItem("favoris"));
     var Favoris = {"recherches": [], "series": []};
@@ -160,6 +165,7 @@ const getFavoris = () => {
     } 
 }
 
+//Supprime le favori de recherche sélectionné
 const delFavori = (elem) => {
     console.log(elem.id);
     favoris = JSON.parse(localStorage.getItem("favoris"));
@@ -172,6 +178,8 @@ const delFavori = (elem) => {
     localStorage.setItem("favoris", favoriStorage);
     getFavoris();
 }
+
+//Ajout aux favoris une série
 const addSerieFav = (id) => {
     var Favoris = {"recherches": [], "series": []};
     if (localStorage.getItem("favoris") != null){
@@ -208,6 +216,7 @@ const addSerieFav = (id) => {
     }
 }
 
+//Affiche les favoris de séries  
 const getSeriesFav = () => {
     if (localStorage.getItem("series") == '' || localStorage.getItem("series") == null) {
         const divSeriesFav = $('#liste-series-favorites').html("").html(' &empty; Aucune recherche enregistrée');
@@ -226,6 +235,7 @@ const getSeriesFav = () => {
     }   
 }
 
+//Supprime le favori de série sélectionné
 const delSerieFav = (elem) => {
     let series = localStorage.getItem("series").split(',');
     const index = series.indexOf(elem);
