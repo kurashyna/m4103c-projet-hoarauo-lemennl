@@ -95,6 +95,13 @@ function showResults(val) {
     else if (val.length < 3) { //Nécessité d'au moins 3 lettres dans le champ pr afficher une prédiction
         $('#prediction').text(" ").append($('<p> &empty; Entrer au moins 3 lettres</p>'));
     } else {
+        $("#btn-favoris").css('background-color', '#ab9f9d')
+        if (inFavoris(val)){
+            $('#btn-favoris-img').attr('src', 'images/etoile-pleine.svg');
+            $('#btn-favoris').removeAttr('onclick');
+        } else {
+            $("#btn-favoris").attr('onclick', 'addFavori(this)').css("cursor", "pointer");
+        }
         fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api/search/?name=' + val)}`)
             .then(response => {
                 if (response.ok) return response.json()
@@ -240,5 +247,21 @@ const delSerieFav = (elem) => {
     getSeriesFav();
 }
 
+const inFavoris = (val) => {
+    var Favoris = {"recherches": [], "series": []};
+    if (localStorage.getItem("favoris") != null){
+        favorisJSON = JSON.parse(localStorage.getItem("favoris"));
+
+        if ( Array.isArray(favorisJSON['series']) && favorisJSON['series'].length){
+            Favoris['series'] = favorisJSON['series'];
+        }
+        if ( Array.isArray(favorisJSON['recherches']) && favorisJSON['recherches'].length){
+            Favoris['recherches'] = favorisJSON['recherches'];
+        }
+    }
+
+    return Favoris['recherches'].includes(val);
+
+}
 getSeriesFav();
 getFavoris();
