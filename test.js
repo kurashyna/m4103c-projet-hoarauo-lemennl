@@ -198,8 +198,6 @@ const addSerieFav = (id) => {
 }
 
 const getSeriesFav = () => {
-
-
     var Favoris = {"recherches": [], "series": []};
     if (localStorage.getItem("favoris") == null){
         localStorage.setItem("favoris", JSON.stringify(Favoris));
@@ -218,7 +216,7 @@ const getSeriesFav = () => {
                 divSeriesFav.append(itemSerie);
             }
     } else {
-        const divFavoris = $('#liste-favoris').html("").html(' &empty; Aucune recherche enregistrée');
+        const divSeriesFav = $('#liste-series-favorites').html("").html(' &empty; Aucune série enregistrée');
     }   
 }
 
@@ -231,5 +229,6 @@ const delSerieFav = (elem) => {
     localStorage.setItem("favoris", favoriStorage);
     getSeriesFav();
 }
+
 getSeriesFav();
 getFavoris();
