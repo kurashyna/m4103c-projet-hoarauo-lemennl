@@ -150,6 +150,19 @@ p#explication {
 	color: var(--main-color);
 }
 
+#liste-series-favorites li {
+	margin-bottom: 8px;
+	cursor: pointer;
+}
+
+#liste-series-favorites li span {
+	text-decoration: underline;
+}
+
+#liste-series-favorites li span:hover {
+	color: var(--main-color);
+}
+
 /* Media-query pour gérer l'affichage sur petit écran */
 @media (max-width: 900px) {
 	#conteneur {
