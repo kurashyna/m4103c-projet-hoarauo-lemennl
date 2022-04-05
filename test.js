@@ -100,7 +100,7 @@ function showResults(val) {
                 if (response.ok) return response.json()
                 throw new Error('Network response was not ok.')
             })
-            .then( (response) => {
+            .then( (response) => { //Si fetch pas vide, on affiche les prédictions
                 data = JSON.parse(response.contents);
                 if (data.length != 0) {
                     var listePrediction = $('<ul></ul>');
@@ -109,7 +109,7 @@ function showResults(val) {
                     }
                     $('#prediction').text(" ").append(listePrediction);
                     $('#prediction').append($('<hr/>'));
-                } else {
+                } else { //Si fetch vide, on affiche "pas de résultats"
                     $('#prediction').text(" ").append('<p> &empty; Pas de résultats </p>');
                 }
             });
