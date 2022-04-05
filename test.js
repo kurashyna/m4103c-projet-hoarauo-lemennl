@@ -38,6 +38,7 @@ function afficheShows(data){
 
             showDiv.attr('onclick', "afficheData(" + "'" + show["id"] + "'" +")");
         }
+    }
 }
 
 const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api'+ id)}`)
