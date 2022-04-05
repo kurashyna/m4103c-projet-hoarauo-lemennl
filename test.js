@@ -21,15 +21,14 @@ const queryAPI = (searchValue = null) => {
 
 function afficheShows(data){
 
-	//var resultats = document.getElementById("bloc-resultats");
     $("#bloc-resultats").empty();
-    if (data != null) {
+    if (data != null) { //Si des shows existent avec ce nom, on affiche leurs infos générales
         for (show of data) {
-            const showDiv = $('<div></div');
+            const showDiv = $('<div></div').css("cursor", "pointer");
 
             showDiv.append($('<h2></h2>').text(show['name']));
             showDiv.append($('<img></img>').attr('src', "https:" + show['imageUrl']));
-            showDiv.append($('<p></p>').text(show['description']));
+            showDiv.append($('<p></p>').html("<strong>Synopsis : </strong>" + show['description']));
             showDiv.append($('<p></p>').html("Rating : " + show['rating'] + "/5 " + '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">' +
              		'<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>' +
              	  	'</svg>'));
@@ -39,9 +38,6 @@ function afficheShows(data){
 
             showDiv.attr('onclick', "afficheData(" + "'" + show["id"] + "'" +")");
         }
-    } else {
-        $("#bloc-resultats").append($('<p> &empty; Pas de résultats </p>'));
-    }	
 }
 
 const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api'+ id)}`)
@@ -56,26 +52,31 @@ const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeUR
 
 const afficheDataPrediction = (elem) => fetch('https://api.allorigins.win/get?url=${encodeURIComponent(\'https://catchtheshow.herokuapp.com/api' + $(elem).attr('id'))
 
-//TODO : Afficher les shows 
+
 function afficherInfos(show, id){
     $("#bloc-resultats").empty();
     console.log(show);
-    if (show != null){
+    if (show != null){ //Si le show existe (on clic sur un show particulier), on affiche ses infos générales
         const divInfos = $('<div></div>');
         divInfos.append($('<h2></h2>').text(show['name']));
-        divInfos.append($('<p></p>').text("Ajouter aux séries favorites").attr('onclick', 'addSerieFav(' + "'" + id + "'"+ ')'))
+        divInfos.append($('<p></p>').html('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmarks-fill" viewBox="0 0 16 16">' +
+        '<path d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4z"/>' +
+        '<path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1H4.268z"/>' +
+        '</svg>' + " Ajouter aux séries favorites").attr('onclick', 'addSerieFav(' + "'" + id + "'"+ ')').css("cursor", "pointer"));
+
+        divInfos.append($('<p></p>').text("Statut : " + show['status']));
+        divInfos.append($('<p></p>').html("<strong>Synopsis : </strong>" + show['description']));
         divInfos.append($('<img></img>').attr('src', "https:" + show['imageUrl']));
         divInfos.append($('<p></p>').html("Rating : " + show['rating'] + "/5 " + '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">' +
         '<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>' +
-          '</svg>' + " - " + show['status'])); 
+          '</svg>')); 
         divInfos.append($('<hr />'));
-        divInfos.append($('<p></p>').text(show['description']));
-        if (show['nextEpisode'] != undefined){
+
+        if (show['nextEpisode'] != undefined){ //Si il y a un prochain épisode, alors on présente ses infos
             divInfos.append($('<h3></h3>').text("Prochain épisode : "));
-            divInfos.append($('<hr />'));
             let countdown = show['nextEpisode']['countdown'];
-            divInfos.append($('<p></p>').text(show['nextEpisode']['name']));
-            divInfos.append($('<p></p>').text("dans : " + countdown));
+            divInfos.append($('<p></p>').text("Nom de l'épisode : " + show['nextEpisode']['name']));
+            divInfos.append($('<p></p>').text("Sort dans : " + countdown));
             divInfos.append($('<p></p>').text("Saison " + show['nextEpisode']['season'] + " - Episode " + show['nextEpisode']['episode']));
         }
         $("#bloc-resultats").append(divInfos);
@@ -100,9 +101,7 @@ function showResults(val) {
                 if (data.length != 0) {
                     var listePrediction = $('<ul></ul>');
                     for (let i=0; i < data.length; i++ ){
-                        // TODO : Finir cette ligne
                         listePrediction.append($('<li></li>').text(data[i]['name']).attr('id', data[i]['id']).attr('onclick', 'afficheData(\'' +  data[i]['id'] + '\')').css("cursor", "pointer"));
-    
                     }
                     $('#prediction').text(" ").append(listePrediction);
                     $('#prediction').append($('<hr/>'));
@@ -193,7 +192,7 @@ const addSerieFav = (id) => {
     favoriStorage = JSON.stringify(Favoris);
     localStorage.setItem("favoris", favoriStorage);
     getFavoris();
-    
+
     let series = [];
     if (localStorage.getItem("series") != ''){
         series.push(localStorage.getItem("series"));
