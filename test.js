@@ -107,7 +107,7 @@ function showResults(val) {
                     for (let i=0; i < data.length; i++ ){
                         listePrediction.append($('<li></li>').text(data[i]['name']).attr('id', data[i]['id']).attr('onclick', 'afficheData(\'' +  data[i]['id'] + '\')').css("cursor", "pointer"));
                     }
-                    $('#prediction').text(" ").append(listePrediction);
+                    $('#prediction').text("Liste des prédictions : ").append(listePrediction);
                     $('#prediction').append($('<hr/>'));
                 } else { //Si fetch vide, on affiche "pas de résultats"
                     $('#prediction').text(" ").append('<p> &empty; Pas de résultats </p>');
