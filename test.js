@@ -41,52 +41,7 @@ function afficheShows(data){
         }
     } else {
         $("#bloc-resultats").append($('<p> &empty; Pas de résultats </p>'));
-    }
-    // if (data != null) {
-    
-    //     for ( var i = 0; i < data.length; i++ ){ 
-    //         console.log(data[i]);
-    //         //On crée une div pr chaque show et on crée les balises qui correspondent aux données
-    //         var resultat = document.createElement("div");
-    
-    //         var name = document.createElement("h3");
-    //         name.textContent = "Titre : " + data[i]["name"];
-    
-    //         var description = document.createElement("p");
-    //     	description.textContent = "Description : " + data["description"];
-
-	// 		var image = document.createElement("img");
-    //     	image.src = "https:" + data["imageUrl"];
-
-    //         var rating = document.createElement("p");
-    //         rating.innerHTML = "Rating : " + data[i]["rating"] + "/5 " + '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">' +
-	// 		'<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>' +
-	// 	  	'</svg>';
-			
-
-	// 		var hr = document.createElement("hr");
-    
-    //         //On ajoute les éléments dans la div
-    //         resultat.appendChild(name);
-    //         resultat.appendChild(description);
-    //         resultat.appendChild(image);
-    //         resultat.appendChild(rating);
-	// 		resultat.appendChild(hr);
-
-			
-	// 		$(resultat).attr("onclick", "afficherInfos(" + "'" + data[i]["id"] + "'" +")");
-    
-    //         // On ajoute la div dans le bloc résultat
-    //         resultats.appendChild(resultat);
-    //     }
-    // } else {
-    //     var resultat = document.createElement("div");
-    
-    //     var vide = document.createElement("p");
-    //     vide.textContent = "Il n'y a pas de résultats.";
-	// 	resultat.appendChild(vide);
-	// 	resultats.appendChild(resultat);
-    // }	
+    }	
 }
 
 const afficheData = (id) => fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://catchtheshow.herokuapp.com/api'+ id)}`)
@@ -125,79 +80,6 @@ function afficherInfos(show, id){
         }
         $("#bloc-resultats").append(divInfos);
     }
-	// var resultats = document.getElementById("bloc-resultats");
-    //     $(resultats).empty();
-
-
-    // if (data != null) {
-
-	// 	// Affichage des infos générales du show
-	// 	var infosGnrl = document.createElement("div");
-
-	// 	var creators = document.createElement("p");
-    //     creators.textContent = "Créateurs : " + data["creators"];
-    
-    //     var name = document.createElement("p");
-    //     name.textContent = "Titre : " + data["name"];
-    
-    //     var description = document.createElement("p");
-    //     description.textContent = "Description : " + data["description"];
-    
-    //     var image = document.createElement("img");
-    //     image.src = "https:" + data["imageUrl"];
-		
-	// 	var status = document.createElement("p");
-	// 	status.textContent = "Statut : " + data["status"];
-
-    //     var rating = document.createElement("p");
-    //     rating.innerHTML = "Rating : " + data["rating"] + "/5 " + '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">' +
-	// 	'<path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>' +
-	// 	'</svg>';
-		
-	// 	var hr = document.createElement("hr");
-
-	// 	// Affichage des infos du prochain épisode du show
-	// 	var prochainEp = document.createElement("div");
-	// 	var intitule = document.createElement("h4");
-	// 	intitule.textContent = "Prochain épisode :";
-
-	// 	var nameEp = document.createElement("p");
-	// 	console.log(data);
-	// 	nameEp.textContent = "Titre : " + data["nextEpisode"]["name"];
-
-	// 	var dateEp = document.createElement("p");
-	// 	dateEp.textContent = "Date : " + data["nextEpisode"]["day"] + "/" + data["nextEpisode"]["month"] + "/" + data["nextEpisode"]["year"];
-
-	// 	var seasonEp = document.createElement("p");
-	// 	seasonEp.textContent = "Saison : " + data["nextEpisode"]["season"] + " numéro d'épisode : " + data["nextEpisode"]["episode"];
-
-		
-    //     // On ajoute les infos principales dans la div attitrée
-    //     infosGnrl.appendChild(name);
-	// 	infosGnrl.appendChild(creators);
-    //     infosGnrl.appendChild(description);
-    //     infosGnrl.appendChild(image);
-	// 	infosGnrl.appendChild(status);
-    //     infosGnrl.appendChild(rating);
-	// 	infosGnrl.appendChild(hr);
-		
-	// 	// On ajoute les infos du prochain épisode dans la div attitrée
-	// 	prochainEp.appendChild(nameEp);
-	// 	prochainEp.appendChild(dateEp);
-	// 	prochainEp.appendChild(seasonEp);
-
-    //     // On ajoute la div dans le bloc résultat
-    //     resultats.appendChild(infosGnrl);
-	// 	resultats.appendChild(prochainEp);
-
-	// } else {
-	// 	var resultat = document.createElement("div");
-    
-    //     var vide = document.createElement("p");
-    //     vide.textContent = "Erreur. Le show est inconnu.";
-	// 	resultat.appendChild(vide);
-	// 	resultats.appendChild(resultat);
-	// }
 }
 
 // Prédiction de recherche
@@ -232,52 +114,86 @@ function showResults(val) {
 }
 
 const addFavori = () => {
-    let favoris = [];
-    favoris.push(localStorage.getItem("favoris"));
-    if (favoris = ['']){
-       favoris = [];
-    } 
-    console.log(favoris);
-    if ($("#champRecherche").val() != ""){
-        let favoris = localStorage.getItem("favoris").split(',');
-        if (!favoris.includes($("#champRecherche").val())) {
-            favoris.push($("#champRecherche").val());
-            localStorage.setItem("favoris", favoris);
-        } else {
-            alert("Déja en favoris");
+    var Favoris = {"recherches": [], "series": []};
+    if (localStorage.getItem("favoris") != null){
+        favorisJSON = JSON.parse(localStorage.getItem("favoris"));
+
+        if ( Array.isArray(favorisJSON['recherches']) && favorisJSON['recherches'].length){
+            Favoris['recherches'] = favorisJSON['recherches'];
         }
-    } else {
-        alert("Entrer une valeur.")
     }
+    if( $("#champRecherche").val() != "" ){
+        if (!Favoris['recherches'].includes($("#champRecherche").val())) {
+            Favoris['recherches'].push($("#champRecherche").val());
+        } else {
+            alert("Valeur déjà présente.");
+        }
+        
+    }
+    
+    favoriStorage = JSON.stringify(Favoris);
+    localStorage.setItem("favoris", favoriStorage);
     getFavoris();
 }
 
 const getFavoris = () => {
-    if (localStorage.getItem("favoris") == ''|| localStorage.getItem("favoris") == null) {
-        const divFavoris = $('#liste-favoris').html("").html(' &empty; Aucune recherche enregistrée');
-    } else {
-        const favorisList = localStorage.getItem("favoris").split(',');
+    console.log(localStorage.getItem("favoris"));
+    var Favoris = {"recherches": [], "series": []};
+    if (localStorage.getItem("favoris") == null){
+        localStorage.setItem("favoris", JSON.stringify(Favoris));
+    }
+    favoris = JSON.parse(localStorage.getItem("favoris"));
+    recherches = favoris['recherches'];
+    if (Array.isArray(recherches) && recherches.length) {
         const divFavoris = $('#liste-favoris');
         divFavoris.html(" ");
-        for (favori of favorisList) {
-            const itemFavori = $('<li></li>').attr('id', favori);
+        for (favori of recherches) {
+            const itemFavori = $('<li></li>').attr('id', favori).attr('class', 'favori');
             const spanFavori = $('<span></span>').text(favori).attr('onclick', 'queryAPI('+ "\'"+ favori + "\'" +  ')');
             const delFavori = $('<img></img>').attr('src', 'images/croix.svg').attr('onclick', 'delFavori(' + favori + ')').attr('width', '15px');
             itemFavori.append(spanFavori);
             itemFavori.append(delFavori);
             divFavoris.append(itemFavori);
         }
-    }   
+    } else {
+        const divFavoris = $('#liste-favoris').html("").html(' &empty; Aucune recherche enregistrée');
+    } 
 }
 
 const delFavori = (elem) => {
-    let favoris = localStorage.getItem("favoris").split(',');
-    const index = favoris.indexOf($(elem).attr('id'));
-    favoris.splice(index, 1);
-    localStorage.setItem("favoris", favoris);
+    console.log(elem.id);
+    favoris = JSON.parse(localStorage.getItem("favoris"));
+    recherches = favoris['recherches'];
+    console.log(recherches);
+    const index = recherches.indexOf(elem.id);
+    console.log(index);
+    recherches.splice(index, 1);
+    favoriStorage = JSON.stringify(favoris);
+    localStorage.setItem("favoris", favoriStorage);
     getFavoris();
 }
 const addSerieFav = (id) => {
+    var Favoris = {"recherches": [], "series": []};
+    if (localStorage.getItem("favoris") != null){
+        favorisJSON = JSON.parse(localStorage.getItem("favoris"));
+
+        if ( Array.isArray(favorisJSON['recherches']) && favorisJSON['recherches'].length){
+            Favoris['recherches'] = favorisJSON['recherches'];
+        }
+    }
+    if( $("#champRecherche").val() != "" ){
+        if (!Favoris['recherches'].includes($("#champRecherche").val())) {
+            Favoris['recherches'].push($("#champRecherche").val());
+        } else {
+            alert("Valeur déjà présente.");
+        }
+        
+    }
+    
+    favoriStorage = JSON.stringify(Favoris);
+    localStorage.setItem("favoris", favoriStorage);
+    getFavoris();
+    
     let series = [];
     if (localStorage.getItem("series") != ''){
         series.push(localStorage.getItem("series"));
